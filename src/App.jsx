@@ -134,6 +134,10 @@ export default function App() {
 
   const openNew = (sid) => { setNewStage(sid || 'sourcing'); setShowNew(true); };
 
+  // Export the current view: open the browser's print dialog (Save as PDF).
+  // Print styles in styles.css unlock the fixed-height shell and hide chrome.
+  const exportPdf = () => window.print();
+
   const promoteTarget = async (tg) => {
     const payload = {
       name: tg.name, sector: tg.sector, size: tg.revenue, stage: 'sourcing',
@@ -189,6 +193,13 @@ export default function App() {
                 <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search deals" />
               </label>
             )}
+            <button className="btn ghost on-dark" onClick={exportPdf} title="Export the current view to PDF">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v10m0 0l-3.5-3.5M12 13l3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M5 16v2.5A1.5 1.5 0 006.5 20h11a1.5 1.5 0 001.5-1.5V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+              Export to PDF
+            </button>
             <button className="btn primary" onClick={() => openNew('sourcing')}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" /></svg>
               New Deal

@@ -427,3 +427,54 @@ input, select { font-family: inherit; }
 .funnel-bar-wrap { display: flex; }
 .funnel-bar { height: 32px; background: linear-gradient(90deg, var(--navy), color-mix(in srgb, var(--accent) 78%, var(--navy-2))); border-radius: 7px; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; min-width: 40px; transition: width .4s; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12); }
 .funnel-bar span { color: #fff; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---------------- Export to PDF button (topbar) ---------------- */
+.btn.ghost.on-dark {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); color: var(--on-dark);
+}
+.btn.ghost.on-dark:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+/* ============================================================
+   Print / Export to PDF
+   The app shell is a fixed-height, overflow-hidden flex column and the
+   board scrolls horizontally — both must be unlocked so the full current
+   view flows onto the printed page(s).
+   ============================================================ */
+@media print {
+  @page { size: landscape; margin: 0.5cm; }
+
+  html, body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    background: var(--board-bg) !important;
+  }
+
+  /* Unlock the fixed-height shell and all internal scroll regions. */
+  .app { height: auto; overflow: visible; }
+  .board { overflow: visible; }
+  .view { overflow: visible; padding-top: 16px; }
+  .col-list { overflow: visible; }
+
+  /* Let the five board columns shrink to fit the page width side-by-side
+     instead of scrolling off the edge. */
+  .column { min-width: 0; max-width: none; }
+
+  /* Hide interactive chrome — nav, search, action buttons, add-deal,
+     and anything explicitly opted out. */
+  .topnav,
+  .top-actions,
+  .col-add,
+  .no-print { display: none !important; }
+
+  /* Keep cards, panels and rows from splitting across pages. */
+  .column,
+  .deal-card,
+  .mandate,
+  .panel,
+  .kpi,
+  .table-wrap,
+  section, article, figure, table { break-inside: avoid; }
+
+  /* Freeze animations/transitions so nothing prints mid-entrance. */
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
