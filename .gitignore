@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.vite
+
+# Local env overrides — committed .env holds the publishable (anon) key,
+# which is safe to expose to the browser by design.
+.env.local
+.env.*.local
